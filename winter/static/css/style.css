@@ -2163,6 +2163,10 @@ ul {
   font-weight: 400;
 }
 
+.main_menu .main-menu-item ul li .nav-link.active {
+    color: #6c6b6b;
+}
+
 /* line 21, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_menu.scss */
 .main_menu .main-menu-item ul li .nav-link:hover {
   color: #000;
@@ -8284,5 +8288,3 @@ h6 {
     justify-content: flex-start !important;
   }
 }
-
-/*# sourceMappingURL=../css/style.map */

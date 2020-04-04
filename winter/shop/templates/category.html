@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-    {% block title %} Category - {{ block.super }} {% endblock %}
+    {% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
     {% block css %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
@@ -47,54 +47,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="left_sidebar_area">
-                            <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
-                                <div class="l_w_title">
-                                    <h3>Browse Categories</h3>
-                                </div>
-                                <div class="widgets_inner">
-                                    <ul class="list">
-                                        <li>
-                                            <a href="#">Fruits and Vegetables</a>
-                                        </li>
-                                        <li class="sub-menu">
-                                            <a href="#Electronics" class=" d-flex justify-content-between">
-                                                Electronics
-                                                <div class="right ti-plus"></div>
-                                            </a>
-                                            <ul>
-                                                <li>
-                                                    <a href="#Electronics">Home Appliances</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#Electronics">Smartphones</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#Electronics">Kitchen Appliances</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#Electronics">Computer Accessories</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#Electronics">Meat Alternatives</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#Electronics">Appliances</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Cooking</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Beverages</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Home and Cleaning</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </aside>
-
+                            {% include 'includes/list_categories.html' with list_categories=list_categories %}
                             <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
                                 <div class="l_w_title">
                                     <h3>Product filters</h3>
