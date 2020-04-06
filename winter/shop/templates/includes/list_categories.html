@@ -1,0 +1,25 @@
+<aside class="left_widgets p_filter_widgets sidebar_box_shadow">
+    <div class="l_w_title">
+        <h3>Browse Categories</h3>
+    </div>
+    <div class="widgets_inner">
+        <ul class="list">
+        {% for category in list_categories %}
+            {% if category.sub_categories %}
+            <li class="sub-menu">
+                <a href="{{ category.href }}" class=" d-flex justify-content-between">
+                    {{ category.title }}<div class="right ti-plus"></div>
+                </a>
+                <ul>
+                    {% for category in list_categories %}
+                    <li> <a href="{{ category.href }}">{{ category.title }}</a> </li>
+                    {% endfor %}
+                </ul>
+            <li>
+            {% else %}
+            <li> <a href="{{ category.href }}">{{ category.title }}</a> </li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+</aside>

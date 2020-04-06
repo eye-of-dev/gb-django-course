@@ -1,6 +1,15 @@
+"""
+    Contact app
+"""
 from django.shortcuts import render
 
 
-# Create your views here.
 def index(request):
-    return render(request, 'contact.html')
+    """ Contact content
+    :param request:
+    :return:
+    """
+    content = {
+        'title': 'contact'
+    }
+    return render(request, 'contact.html', content)
