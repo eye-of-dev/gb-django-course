@@ -109,6 +109,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+uwsgi-tutorial/
 
 # Spyder project settings
 .spyderproject
@@ -119,6 +120,7 @@ venv.bak/
 
 # mkdocs documentation
 /site
+/winter/static
 
 # mypy
 .mypy_cache/
