@@ -10,6 +10,6 @@ def index(request):
     :return:
     """
     content = {
-        'title': 'mainpage'
+        'title': 'главная'
     }
     return render(request, 'index.html', content)

@@ -3,27 +3,17 @@
 """
 from django.shortcuts import render
 
+from shop.models import ProductCategories
+
 
 def index(request):
     """ Category content
     :param request:
     :return:
     """
-    list_categories = [
-        {'href': '#', 'title': 'Fruits and Vegetables'},
-        {'href': '#', 'title': 'Electronics', 'sub_categories': [
-            {'href': '#', 'title': 'Home Appliances'},
-            {'href': '#', 'title': 'Smartphones'},
-            {'href': '#', 'title': 'Kitchen Appliances'},
-            {'href': '#', 'title': 'Computer Accessories'},
-            {'href': '#', 'title': 'Meat Alternatives'},
-        ]},
-        {'href': '#', 'title': 'Cooking'},
-        {'href': '#', 'title': 'Beverages'},
-        {'href': '#', 'title': 'Home and Cleaning'}
-    ]
+    list_categories = ProductCategories.objects.all()
     content = {
-        'title': 'category',
+        'title': 'каталог',
         'list_categories': list_categories
     }
     return render(request, 'category.html', content)
