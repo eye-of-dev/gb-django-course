@@ -121,6 +121,7 @@ uwsgi-tutorial/
 # mkdocs documentation
 /site
 /winter/static
+/media
 
 # mypy
 .mypy_cache/
