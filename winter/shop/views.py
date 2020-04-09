@@ -3,30 +3,28 @@
 """
 from django.shortcuts import render
 
+from shop.models import ProductCategories
 
-def index(request):
+from shop.models import Products
+
+
+def catalog(request):
     """ Category content
     :param request:
     :return:
     """
-    list_categories = [
-        {'href': '#', 'title': 'Fruits and Vegetables'},
-        {'href': '#', 'title': 'Electronics', 'sub_categories': [
-            {'href': '#', 'title': 'Home Appliances'},
-            {'href': '#', 'title': 'Smartphones'},
-            {'href': '#', 'title': 'Kitchen Appliances'},
-            {'href': '#', 'title': 'Computer Accessories'},
-            {'href': '#', 'title': 'Meat Alternatives'},
-        ]},
-        {'href': '#', 'title': 'Cooking'},
-        {'href': '#', 'title': 'Beverages'},
-        {'href': '#', 'title': 'Home and Cleaning'}
-    ]
+    list_categories = ProductCategories.objects.all()
+    list_products = Products.objects.all()
     content = {
-        'title': 'category',
-        'list_categories': list_categories
+        'title': 'каталог',
+        'list_categories': list_categories,
+        'list_products': list_products
     }
     return render(request, 'category.html', content)
+
+
+def category_view(request, pk):
+    pass
 
 
 def product(request):
@@ -35,6 +33,6 @@ def product(request):
     :return:
     """
     content = {
-        'title': 'product'
+        'title': 'продукт'
     }
     return render(request, 'product.html', content)

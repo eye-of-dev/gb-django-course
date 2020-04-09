@@ -10,6 +10,6 @@ def index(request):
     :return:
     """
     content = {
-        'title': 'contact'
+        'title': 'контакты'
     }
     return render(request, 'contact.html', content)
