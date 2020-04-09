@@ -33,6 +33,6 @@ def product(request):
     :return:
     """
     content = {
-        'title': 'product'
+        'title': 'продукт'
     }
     return render(request, 'product.html', content)
