@@ -3551,6 +3551,10 @@ ul {
   margin-top: 25px;
 }
 
+.p_filter_widgets .list-categories .active{
+    border-bottom: 1px dotted #000;
+}
+
 /* line 281, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
 .p_filter_widgets .list:first-child {
   padding-top: 0;

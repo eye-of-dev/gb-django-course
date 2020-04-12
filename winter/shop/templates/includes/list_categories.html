@@ -3,21 +3,21 @@
         <h3>Категории товаров</h3>
     </div>
     <div class="widgets_inner">
-        <ul class="list">
-        {% for category in list_categories %}
-            {% if category.sub_categories %}
+        <ul class="list list-categories">
+        {% for model in list_categories %}
+            {% if model.sub_categories %}
             <li class="sub-menu">
                 <a href="{{ category.href }}" class=" d-flex justify-content-between">
-                    {{ category.title }}<div class="right ti-plus"></div>
+                    {{ model.title }}<div class="right ti-plus"></div>
                 </a>
                 <ul>
-                    {% for category in list_categories %}
-                    <li> <a href="{{ category.category_view.url }}">{{ category.title }}</a> </li>
+                    {% for model in list_categories %}
+                    <li> <a href="{{ category.category_view.url }}">{{ model.title }}</a> </li>
                     {% endfor %}
                 </ul>
             <li>
             {% else %}
-            <li> <a href="{% url 'shop:category_view' category.id %}">{{ category.title }}</a> </li>
+            <li class="{% if model.id == category.id %}active{% endif %}"> <a href="{% url 'shop:category_view' model.id %}">{{ model.title }}</a> </li>
             {% endif %}
         {% endfor %}
         </ul>
