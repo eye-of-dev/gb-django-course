@@ -8,7 +8,7 @@ from shop.models import ProductCategories
 from shop.models import Products
 
 
-def catalog(request):
+def catalog_view(request):
     """ Category content
     :param request:
     :return:
@@ -27,7 +27,7 @@ def category_view(request, pk):
     pass
 
 
-def product(request):
+def product_view(request):
     """ Product content
     :param request:
     :return:

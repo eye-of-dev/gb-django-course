@@ -4,7 +4,7 @@
 from django.shortcuts import render
 
 
-def index(request):
+def index_view(request):
     """ Contact content
     :param request:
     :return:

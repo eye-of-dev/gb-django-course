@@ -1,6 +1,6 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="{% url 'mainpage' %}"> <img src="{% static 'img/logo.png' %}" alt="logo"> </a>
+    <a class="navbar-brand" href="{% url 'mainpage:index' %}"> <img src="{% static 'img/logo.png' %}" alt="logo"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -10,21 +10,29 @@
     <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'mainpage' %}active{% endif %}" href="{% url 'mainpage' %}">Главная</a>
+                <a
+                        class="nav-link {% if request.resolver_match.url_name == 'mainpage' %}active{% endif %}"
+                        href="{% url 'mainpage:index' %}">
+                    Главная
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name in 'catalog,product' %}active{% endif %}" href="{% url 'shop:catalog' %}">Каталог</a>
+                <a
+                        class="nav-link {% if request.resolver_match.url_name in 'catalog,product' %}active{% endif %}"
+                        href="{% url 'shop:catalog' %}">
+                    Каталог
+                </a>
             </li>
-<!--            <li class="nav-item dropdown">-->
-<!--                <a class="nav-link {% if request.resolver_match.url_name in 'catalog,product' %}active{% endif %} dropdown-toggle" href="{% url 'shop:catalog' %}" id="navbarDropdown_1"-->
-<!--                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                    Shop-->
-<!--                </a>-->
-<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">-->
-<!--                    <a class="dropdown-item" href="{% url 'shop:catalog' %}">shop category</a>-->
-<!--                    <a class="dropdown-item" href="{% url 'shop:product' %}">product details</a>-->
-<!--                </div>-->
-<!--            </li>-->
+            <!--            <li class="nav-item dropdown">-->
+            <!--                <a class="nav-link {% if request.resolver_match.url_name in 'catalog,product' %}active{% endif %} dropdown-toggle" href="{% url 'shop:catalog' %}" id="navbarDropdown_1"-->
+            <!--                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+            <!--                    Shop-->
+            <!--                </a>-->
+            <!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">-->
+            <!--                    <a class="dropdown-item" href="{% url 'shop:catalog' %}">shop category</a>-->
+            <!--                    <a class="dropdown-item" href="{% url 'shop:product' %}">product details</a>-->
+            <!--                </div>-->
+            <!--            </li>-->
             <!--                                <li class="nav-item dropdown">-->
             <!--                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"-->
             <!--                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
@@ -55,7 +63,11 @@
             <!--                                </li>-->
 
             <li class="nav-item">
-                <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Контакты</a>
+                <a
+                        class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
+                        href="{% url 'contact:index' %}">
+                    Контакты
+                </a>
             </li>
         </ul>
     </div>
@@ -65,10 +77,25 @@
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ti-bag"></i>
             </a>
-<!--            <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                <div class="single_product"></div>-->
-<!--            </div>-->
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="single_product"></div>
+            </div>
         </div>
         <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
+        {% if user.is_authenticated %}
+        <div class="dropdown">
+            <a class="dropdown-toggle" href="{% url 'authapp:profile' %}" id="navbarDropdown4" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="ti-user"></i>
+            </a>
+            <div class="dropdown-menu profile" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'authapp:profile' %}">Профиль</a>
+                <a class="dropdown-item" href="{% url 'authapp:profile' %}">История заказов</a>
+                <a class="dropdown-item" href="{% url 'authapp:logout' %}">Выход</a>
+            </div>
+        </div>
+        {% else %}
+        <a href="{% url 'authapp:login' %}"><i class="ti-shift-right"></i></a>
+        {% endif %}
     </div>
 </nav>
