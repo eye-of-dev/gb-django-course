@@ -75,7 +75,9 @@
         <div class="cart">
             <a  href="{% url 'cartapp:index' %}">
                 <i class="ti-bag">
-                    <span class="cart_count">5</span>
+                    {% if cart %}
+                    <span class="cart_count">{{ cart|length }}</span>
+                    {% endif %}
                 </i>
             </a>
 <!--            <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->

@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
 
+from cartapp.models import Cart
+
 
 def login_view(request):
     """
@@ -20,6 +22,14 @@ def login_view(request):
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
             auth.login(request, user)
+
+            """
+            todo При авторазации проверяем делал ли заказы пользователь как гость. 
+            Если есть, то прикрепляем эти заказы авторизованному пользователю.
+            Вынести этот функционал в общий контроллер. Тему будет проходить на последнем уроке.
+            """
+            Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all().update(user=request.user)
+
             return redirect('mainpage:index')
 
     content = {
