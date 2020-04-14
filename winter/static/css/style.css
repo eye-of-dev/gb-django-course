@@ -40,7 +40,7 @@ input:focus {
 
 /* line 25, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_common.scss */
 .section_padding {
-  padding: 140px 0px;
+  padding: 30px 0px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2331,6 +2331,11 @@ ul {
   text-transform: capitalize;
 }
 
+.dropdown .dropdown-menu.profile {
+  right: 0;
+  left: revert;
+}
+
 /* line 175, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_menu.scss */
 .dropdown:hover .dropdown-menu {
   transform: scale(1);
@@ -3544,6 +3549,10 @@ ul {
   border-top: 1px solid #ddd;
   padding-top: 25px;
   margin-top: 25px;
+}
+
+.p_filter_widgets .list-categories .active{
+    border-bottom: 1px dotted #000;
 }
 
 /* line 281, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */

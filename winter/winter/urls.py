@@ -20,8 +20,9 @@ from django.contrib.staticfiles.urls import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('mainpage.urls')),
-    path('contact/', include('contact.urls')),
+    path('', include('mainpage.urls', namespace='mainpage')),
+    path('auth/', include('authapp.urls', namespace='authapp')),
+    path('contact/', include('contact.urls', namespace='contact')),
     path('shop/', include('shop.urls', namespace='shop')),
 ]
 
