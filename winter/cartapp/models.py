@@ -19,3 +19,6 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.product.title
+
+    def total_row(self):
+        return self.price*self.quantity

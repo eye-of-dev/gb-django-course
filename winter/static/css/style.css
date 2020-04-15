@@ -5615,6 +5615,7 @@ ul {
   display: inline-block;
   margin-left: 20px;
   box-shadow: -14.142px 14.142px 20px 0px rgba(0, 0, 0, 0.1);
+  padding: 18px 0;
 }
 
 /* line 2101, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
@@ -5671,6 +5672,7 @@ ul {
   text-align: center;
   color: #fff;
   margin-right: 15px;
+  padding: 15px 0;
 }
 
 /* line 2150, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */

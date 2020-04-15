@@ -36,31 +36,33 @@
                       </tr>
                 </thead>
                 <tbody>
+                    {% for model in cart %}
                     <tr>
                         <td>
                             <div class="media">
                                 <div class="d-flex">
-                                  <img src="img/arrivel/arrivel_1.png" alt="" />
+                                  <img src="{{ model.product.image.url }}" alt="{{ model.product.title }}" />
                                 </div>
                                 <div class="media-body">
-                                  <p>Minimalistic shop for multipurpose use</p>
+                                  <p>{{ model.product.title }}</p>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <h5>360.00</h5>
+                            <h5>{{ model.price }}</h5>
                         </td>
                         <td>
                           <div class="product_count">
                               <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                              <input class="input-number" type="text" value="1" min="0" max="10">
+                              <input class="input-number" type="text" value="{{ model.quantity }}" min="0" max="10">
                               <span class="input-number-increment"> <i class="ti-plus"></i></span>
                           </div>
                         </td>
                         <td>
-                            <h5>720.00</h5>
+                            <h5>{{ model.total_row }}</h5>
                         </td>
                     </tr>
+                    {% endfor %}
                     <tr>
                         <td></td>
                         <td></td>

@@ -58,12 +58,28 @@ def category_view(request, pk):
     return render(request, 'category.html', content)
 
 
-def product_view(request):
+def product_view(request, сpk, ppk):
     """ Product content
     :param request:
     :return:
     """
+    category = get_object_or_404(ProductCategories, pk=сpk)
+    product = get_object_or_404(Products, pk=ppk)
+
+    similar_products = Products.objects.filter(category=category.id).exclude(pk=ppk).all()
+
+    """
+    Получаем колличество товаров в корзине
+    todo Вынести этот код в общий контроллер, чтобы не дублировать его в каждом приложении
+    тема с контроллерами будет рассматриваться на последнем уроке.
+    """
+    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
+
     content = {
-        'title': 'продукт'
+        'title': product.title,
+        'category': category,
+        'product': product,
+        'similar_products': similar_products,
+        'cart': cart
     }
     return render(request, 'product.html', content)
