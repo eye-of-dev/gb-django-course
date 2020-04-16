@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
+{% block body_class %}bg-white{% endblock %}
+{% block content %}
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Главная / Корзина</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+
+<!--================Cart Area =================-->
+<section class="cart_area section_padding">
+    <div class="container">
+        <h3 class="text-heading">Корзина</h3>
+        <div class="cart_inner">
+            {% if cart %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                      <tr>
+                          <th scope="col">Продукт</th>
+                          <th scope="col">Цена</th>
+                          <th scope="col">Колличество</th>
+                          <th scope="col">Итого</th>
+                      </tr>
+                </thead>
+                <tbody>
+                    {% for model in cart %}
+                    <tr>
+                        <td>
+                            <div class="media">
+                                <div class="d-flex">
+                                  <img src="{{ model.product.image.url }}" alt="{{ model.product.title }}" />
+                                </div>
+                                <div class="media-body">
+                                  <p>{{ model.product.title }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <h5>{{ model.price }}</h5>
+                        </td>
+                        <td>
+                          <div class="product_count">
+                              <span class="input-number-decrement"> <i class="ti-minus"></i></span>
+                              <input class="input-number" type="text" value="{{ model.quantity }}" min="0" max="10">
+                              <span class="input-number-increment"> <i class="ti-plus"></i></span>
+                          </div>
+                        </td>
+                        <td>
+                            <h5>{{ model.total_row }}</h5>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <h5>Итого</h5>
+                        </td>
+                        <td>
+                            <h5>2160.00</h5>
+                        </td>
+                    </tr>
+                </tbody>
+              </table>
+                <div class="checkout_btn_inner float-right">
+                    <a class="btn_1" href="{% url 'shop:catalog' %}">Продолжить покупки</a>
+                    <a class="btn_1 checkout_btn_1" href="{% url 'cartapp:checkout' %}">Оформить заказ</a>
+                </div>
+            </div>
+            {% else %}
+            <p class="sample-text">
+                Ваша корзина пока пуста
+            </p>
+            <div class="table-responsive">
+                <div class="checkout_btn_inner float-right">
+                    <a class="btn_1" href="{% url 'shop:catalog' %}">Продолжить покупки</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->
+{% endblock %}
+{% block instagram_photo %}
+{% include 'includes/instagram_photo.html' %}
+{% endblock %}
