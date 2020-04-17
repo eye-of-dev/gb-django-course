@@ -36,7 +36,7 @@
                       </tr>
                 </thead>
                 <tbody>
-                    {% for model in cart %}
+                    {% for model in cart.get_user_products %}
                     <tr>
                         <td>
                             <div class="media">
@@ -59,7 +59,7 @@
                           </div>
                         </td>
                         <td>
-                            <h5>{{ model.total_row }}</h5>
+                            <h5>{{ model.total_price_by_row }}</h5>
                         </td>
                     </tr>
                     {% endfor %}
@@ -70,7 +70,7 @@
                             <h5>Итого</h5>
                         </td>
                         <td>
-                            <h5>2160.00</h5>
+                            <h5>{{ cart.total_cart_price_products }}</h5>
                         </td>
                     </tr>
                 </tbody>

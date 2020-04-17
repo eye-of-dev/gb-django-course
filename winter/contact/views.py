@@ -1,26 +1,13 @@
 """
     Contact app
 """
-from django.shortcuts import render
-
-from cartapp.models import Cart
+from mainpage.views import TemplateClass
 
 
-def index_view(request):
-    """ Contact content
-    :param request:
-    :return:
-    """
+class ContactView(TemplateClass):
+    template_name = 'contact.html'
 
-    """
-    Получаем колличество товаров в корзине
-    todo Вынести этот код в общий контроллер, чтобы не дублировать его в каждом приложении
-    тема с контроллерами будет рассматриваться на последнем уроке.
-    """
-    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
-
-    content = {
-        'title': 'контакты',
-        'cart': cart
-    }
-    return render(request, 'contact.html', content)
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context['title'] = 'контакты'
+        return context

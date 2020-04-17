@@ -1,85 +1,57 @@
 """
     Shop app
 """
-from django.shortcuts import render, get_object_or_404
-
 from shop.models import ProductCategories
 
 from shop.models import Products
 
-from cartapp.models import Cart
+from mainpage.views import TemplateClass
+
+from mainpage.views import CommonClass, DetailClass
 
 
-def catalog_view(request):
-    """ Category content
-    :param request:
-    :return:
-    """
+class CatalogView(TemplateClass):
+    template_name = 'category.html'
+    title = 'каталог'
 
-    """
-    Получаем колличество товаров в корзине
-    todo Вынести этот код в общий контроллер, чтобы не дублировать его в каждом приложении
-    тема с контроллерами будет рассматриваться на последнем уроке.
-    """
-    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
+    @staticmethod
+    def get_list_categories():
+        return ProductCategories.objects.all()
 
-    list_categories = ProductCategories.objects.all()
-    list_products = Products.objects.all()
-    content = {
-        'title': 'каталог',
-        'list_categories': list_categories,
-        'list_products': list_products,
-        'cart': cart
-    }
-    return render(request, 'category.html', content)
+    @staticmethod
+    def get_list_products():
+        return Products.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(CatalogView, self).get_context_data(**kwargs)
+        context['list_categories'] = self.get_list_categories()
+        context['list_products'] = self.get_list_products()
+        return context
 
 
-def category_view(request, pk):
-    category = get_object_or_404(ProductCategories, pk=pk)
+class CategoryView(DetailClass):
+    template_name = 'category.html'
+    model = ProductCategories
 
-    """
-    Получаем колличество товаров в корзине
-    todo Вынести этот код в общий контроллер, чтобы не дублировать его в каждом приложении
-    тема с контроллерами будет рассматриваться на последнем уроке.
-    """
-    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
+    def get_list_products(self):
+        return Products.objects.filter(category=self.object.id).all()
 
-    list_categories = ProductCategories.objects.all()
-    list_products = Products.objects.filter(category=category.id).all()
-
-    content = {
-        'title': category.title,
-        'category': category,
-        'list_categories': list_categories,
-        'list_products': list_products,
-        'cart': cart
-    }
-
-    return render(request, 'category.html', content)
+    def get_context_data(self, **kwargs):
+        context = super(CategoryView, self).get_context_data(**kwargs)
+        context['list_categories'] = CatalogView().get_list_categories()
+        context['list_products'] = self.get_list_products()
+        return context
 
 
-def product_view(request, сpk, ppk):
-    """ Product content
-    :param request:
-    :return:
-    """
-    category = get_object_or_404(ProductCategories, pk=сpk)
-    product = get_object_or_404(Products, pk=ppk)
+class ProductView(DetailClass):
+    template_name = 'product.html'
+    model = Products
 
-    similar_products = Products.objects.filter(category=category.id).exclude(pk=ppk).all()
+    def get_similar_products(self):
+        return Products.objects.filter(category=self.object.category.id).exclude(pk=self.object.id).all()
 
-    """
-    Получаем колличество товаров в корзине
-    todo Вынести этот код в общий контроллер, чтобы не дублировать его в каждом приложении
-    тема с контроллерами будет рассматриваться на последнем уроке.
-    """
-    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
-
-    content = {
-        'title': product.title,
-        'category': category,
-        'product': product,
-        'similar_products': similar_products,
-        'cart': cart
-    }
-    return render(request, 'product.html', content)
+    def get_context_data(self, **kwargs):
+        context = super(ProductView, self).get_context_data(**kwargs)
+        context['category'] = self.object.category
+        context['similar_products'] = self.get_similar_products()
+        return context

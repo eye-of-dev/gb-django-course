@@ -1,39 +1,27 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 import uuid
 
 from shop.models import Products
 
 from cartapp.models import Cart
 
+from mainpage.views import TemplateClass
 
-def index_view(request):
-    """ Корзина
-    :param request:
-    :return:
-    """
 
-    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
-
-    content = {
-        'title': 'корзина',
-        'cart': cart
-    }
-    return render(request, 'cart.html', content)
+class CartView(TemplateClass):
+    template_name = 'cart.html'
+    title = 'корзина'
 
 
 def add_view(request, pk):
     """
     Добавления товара в корзину
-    todo Генерацю и получения cart_uuid вывести в общий контроллер. тема будет рассматриваться на последнем уроке
-    todo пока не хватает знаний(:
     :param request:
     :param pk:
     :return:
     """
     cart_uuid = request.COOKIES.get('cart_uuid')
-    if cart_uuid is None:
-        cart_uuid = uuid.uuid1()
 
     product = get_object_or_404(Products, pk=pk)
     cart = Cart.objects.filter(cart_uuid=cart_uuid, product=product).first()
@@ -48,9 +36,7 @@ def add_view(request, pk):
     cart.price = product.price
     cart.save()
 
-    response = redirect(request.META.get('HTTP_REFERER'))
-    response.set_cookie('cart_uuid', value=cart_uuid, max_age=30 * 24 * 60 * 60)
-    return response
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 def update_view(request):

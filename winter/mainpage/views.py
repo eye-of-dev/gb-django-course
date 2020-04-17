@@ -1,26 +1,50 @@
 """
     Mainpage app
 """
-from django.shortcuts import render
+import uuid
 
-from cartapp.models import Cart
+from django.views.generic import TemplateView, DetailView
+
+from cartapp.models import CartCommon
 
 
-def index_view(request):
-    """ Mainpage content
-    :param request:
-    :return:
+class CommonClass:
+    """
+    Служебный класс в котором приписаны
+    общие методы для всего приложения
     """
 
-    """
-    Получаем колличество товаров в корзине
-    todo Вынести этот код в общий контроллер, чтобы не дублировать его в каждом приложении
-    тема с контроллерами будет рассматриваться на последнем уроке.
-    """
-    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
+    def get(self, request, *args, **kwargs):
+        cart_uuid = request.COOKIES.get('cart_uuid')
+        if cart_uuid is None:
+            cart_uuid = uuid.uuid1()
 
-    content = {
-        'title': 'главная',
-        'cart': cart
-    }
-    return render(request, 'index.html', content)
+        response = super(CommonClass, self).get(request, *args, **kwargs)
+        response.set_cookie('cart_uuid', value=cart_uuid, max_age=30 * 24 * 60 * 60)
+        return response
+
+    def cart(self):
+        return CartCommon(self.request.COOKIES.get('cart_uuid'))
+
+
+class TemplateClass(CommonClass, TemplateView):
+    title = None
+
+    def get_context_data(self, **kwargs):
+        context = super(TemplateClass, self).get_context_data(**kwargs)
+        context['cart'] = self.cart()
+        context['title'] = self.title
+        return context
+
+
+class DetailClass(CommonClass, DetailView):
+    def get_context_data(self, **kwargs):
+        context = super(DetailClass, self).get_context_data(**kwargs)
+        context['cart'] = self.cart()
+        context['title'] = self.object.title
+        return context
+
+
+class Mainpage(TemplateClass):
+    template_name = 'index.html'
+    title = 'главная'
