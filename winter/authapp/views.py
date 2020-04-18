@@ -1,9 +1,8 @@
 from django.contrib import auth
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm
 
 from cartapp.models import Cart
 
@@ -15,6 +14,9 @@ def login_view(request):
     :return:
     """
     login_form = ShopUserLoginForm(data=request.POST or None)
+
+    next = request.GET['next'] if 'next' in request.GET.keys() else ''
+
     if request.method == 'POST' and login_form.is_valid():
         username = request.POST['username']
         password = request.POST['password']
@@ -24,17 +26,20 @@ def login_view(request):
             auth.login(request, user)
 
             """
-            todo При авторазации проверяем делал ли заказы пользователь как гость. 
+            При авторазации проверяем делал ли заказы пользователь как гость. 
             Если есть, то прикрепляем эти заказы авторизованному пользователю.
-            Вынести этот функционал в общий контроллер. Тему будет проходить на последнем уроке.
             """
             Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all().update(user=request.user)
+
+            if 'next' in request.POST.keys():
+                return redirect(request.POST['next'])
 
             return redirect('mainpage:index')
 
     content = {
         'title': 'авторизация',
-        'login_form': login_form
+        'login_form': login_form,
+        'next': next
     }
     return render(request, 'login.html', content)
 
@@ -56,28 +61,6 @@ def registration_view(request):
         'register_form': register_form
     }
     return render(request, 'registration.html', content)
-
-
-@login_required(login_url='authapp:login')
-def profile_view(request):
-    """
-    Обновление личных данных(профиля) на сайте
-    :param request:
-    :return:
-    """
-    if request.method == 'POST':
-        change_form = ShopUserChangeForm(request.POST, request.FILES, instance=request.user)
-        if change_form.is_valid():
-            change_form.save()
-            return redirect('authapp:profile')
-    else:
-        change_form = ShopUserChangeForm(instance=request.user)
-
-    content = {
-        'title': 'редактирование профиля',
-        'change_form': change_form
-    }
-    return render(request, 'profile.html', content)
 
 
 def logout_view(request):

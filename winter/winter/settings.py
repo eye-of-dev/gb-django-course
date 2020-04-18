@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authapp.apps.AuthappConfig',
+    'cabinetapp.apps.CabinetappConfig',
     'cartapp.apps.CartappConfig',
     'contact.apps.ContactConfig',
     'mainpage.apps.MainpageConfig',

@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import Avg, Sum
+from django.db.models import Sum
 
 from shop.models import Products
 

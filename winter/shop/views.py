@@ -5,27 +5,24 @@ from shop.models import ProductCategories
 
 from shop.models import Products
 
-from mainpage.views import TemplateClass
-
 from mainpage.views import CommonClass, DetailClass
 
+from mainpage.views import ListClass
 
-class CatalogView(TemplateClass):
+
+class CatalogView(ListClass):
+    model = Products
     template_name = 'category.html'
     title = 'каталог'
+    context_object_name = 'list_products'
 
     @staticmethod
     def get_list_categories():
         return ProductCategories.objects.all()
 
-    @staticmethod
-    def get_list_products():
-        return Products.objects.all()
-
     def get_context_data(self, **kwargs):
         context = super(CatalogView, self).get_context_data(**kwargs)
         context['list_categories'] = self.get_list_categories()
-        context['list_products'] = self.get_list_products()
         return context
 
 

@@ -3,7 +3,7 @@
 """
 import uuid
 
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 
 from cartapp.models import CartCommon
 
@@ -42,6 +42,16 @@ class DetailClass(CommonClass, DetailView):
         context = super(DetailClass, self).get_context_data(**kwargs)
         context['cart'] = self.cart()
         context['title'] = self.object.title
+        return context
+
+
+class ListClass(CommonClass, ListView):
+    title = None
+
+    def get_context_data(self, **kwargs):
+        context = super(ListClass, self).get_context_data(**kwargs)
+        context['cart'] = self.cart()
+        context['title'] = self.title
         return context
 
 

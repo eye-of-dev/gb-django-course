@@ -17,7 +17,8 @@
                         <img src="{{ product.image.url }}" alt="{{ product.title }}">
                         <div class="category_social_icon">
                             <ul>
-                                <li><a href="#"><i class="ti-heart"></i></a></li>
+                                <li><a href="{% url 'cabinetapp:wishlist_add' product.id %}"><i
+                                        class="ti-heart"></i></a></li>
                                 <li><a href="{% url 'cartapp:add' product.id %}"><i class="ti-bag"></i></a></li>
                             </ul>
                         </div>
