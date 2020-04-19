@@ -12,7 +12,7 @@ from mainpage.views import ListClass
 
 class CatalogView(ListClass):
     model = Products
-    template_name = 'category.html'
+    template_name = 'catalog.html'
     title = 'каталог'
     context_object_name = 'list_products'
 
@@ -29,20 +29,18 @@ class CatalogView(ListClass):
 class CategoryView(DetailClass):
     template_name = 'category.html'
     model = ProductCategories
-
-    def get_list_products(self):
-        return Products.objects.filter(category=self.object.id).all()
+    context_object_name = 'category'
 
     def get_context_data(self, **kwargs):
         context = super(CategoryView, self).get_context_data(**kwargs)
         context['list_categories'] = CatalogView().get_list_categories()
-        context['list_products'] = self.get_list_products()
         return context
 
 
 class ProductView(DetailClass):
     template_name = 'product.html'
     model = Products
+    context_object_name = 'product'
 
     def get_similar_products(self):
         return Products.objects.filter(category=self.object.category.id).exclude(pk=self.object.id).all()

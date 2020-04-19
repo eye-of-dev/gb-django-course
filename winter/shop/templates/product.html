@@ -22,7 +22,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb_iner">
                     <div class="breadcrumb_iner_item">
-                        <p>Главная / Каталог / {{ object.category.title }} / {{ object.title }}</p>
+                        <p>Главная / Каталог / {{ product.category.title }} / {{ product.title }}</p>
                     </div>
                 </div>
             </div>
@@ -37,8 +37,8 @@
             <div class="col-lg-5">
                 <div class="product_slider_img">
                     <div id="vertical">
-                        <div data-thumb="{{ object.image.url }}">
-                            <img src="{{ object.image.url }}"/>
+                        <div data-thumb="{{ product.image.url }}">
+                            <img src="{{ product.image.url }}"/>
                         </div>
                         <!--                        <div data-thumb="{% static 'img/product_details/prodect_details_2.png' %}">-->
                         <!--                            <img src="{% static 'img/product_details/prodect_details_2.png' %}"/>-->
@@ -54,20 +54,20 @@
             </div>
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
-                    <h3>{{ object.title }}</h3>
-                    <h2>{{ object.price }} &#8381;</h2>
+                    <h3>{{ product.title }}</h3>
+                    <h2>{{ product.price }} &#8381;</h2>
                     <ul class="list">
                         <li>
                             <a class="active" href="{% url 'shop:category_view' category.id %}">
-                                <span>Категория</span> : {{ object.category.title }}
+                                <span>Категория</span> : {{ product.category.title }}
                             </a>
                         </li>
                         <li>
-                            <span>Колличество</span> : {{ object.quantity }}
+                            <span>Колличество</span> : {{ product.quantity }}
                         </li>
                     </ul>
                     <p>
-                        {{ object.short_description }}
+                        {{ product.short_description }}
                     </p>
                     <div class="card_area">
                         <div class="product_count d-inline-block">
@@ -76,8 +76,8 @@
                             <span class="number-increment"> <i class="ti-plus"></i></span>
                         </div>
                         <div class="add_to_cart">
-                            <a href="{% url 'cartapp:add' object.id %}" class="btn_3">Купить</a>
-                            <a href="{% url 'cabinetapp:wishlist_add' object.id %}" class="like_us"><i
+                            <a href="{% url 'cartapp:add' product.id %}" class="btn_3">Купить</a>
+                            <a href="{% url 'cabinetapp:wishlist_add' product.id %}" class="like_us"><i
                                     class="ti-heart"></i></a>
                         </div>
                         <div class="social_icon">
@@ -116,7 +116,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                {{ object.description }}
+                {{ product.description }}
             </div>
             <!--            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">-->
             <!--                <div class="table-responsive">-->
