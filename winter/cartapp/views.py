@@ -1,39 +1,27 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
-import uuid
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 
+from django.template.loader import render_to_string
 from shop.models import Products
 
-from cartapp.models import Cart
+from cartapp.models import Cart, CartCommon
+
+from mainpage.views import TemplateClass
 
 
-def index_view(request):
-    """ Корзина
-    :param request:
-    :return:
-    """
-
-    cart = Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all()
-
-    content = {
-        'title': 'корзина',
-        'cart': cart
-    }
-    return render(request, 'cart.html', content)
+class CartView(TemplateClass):
+    template_name = 'cart.html'
+    title = 'корзина'
 
 
-def add_view(request, pk):
+def add_action(request, pk):
     """
     Добавления товара в корзину
-    todo Генерацю и получения cart_uuid вывести в общий контроллер. тема будет рассматриваться на последнем уроке
-    todo пока не хватает знаний(:
     :param request:
     :param pk:
     :return:
     """
     cart_uuid = request.COOKIES.get('cart_uuid')
-    if cart_uuid is None:
-        cart_uuid = uuid.uuid1()
 
     product = get_object_or_404(Products, pk=pk)
     cart = Cart.objects.filter(cart_uuid=cart_uuid, product=product).first()
@@ -48,28 +36,44 @@ def add_view(request, pk):
     cart.price = product.price
     cart.save()
 
-    response = redirect(request.META.get('HTTP_REFERER'))
-    response.set_cookie('cart_uuid', value=cart_uuid, max_age=30 * 24 * 60 * 60)
-    return response
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
-def update_view(request):
-    pass
+def update_action(request, pk, quantity):
+    """
+    Обновляем колличество товара в корзине
+    :param request:
+    :param pk:
+    :param quantity:
+    :return:
+    """
+    if request.is_ajax():
+        product = get_object_or_404(Cart, pk=pk)
+        product.quantity = quantity
+        product.save()
+
+        cart = CartCommon(request.COOKIES.get('cart_uuid'))
+        result = render_to_string('includes/cart_data.html', {'cart': cart})
+
+        return JsonResponse({'result': result})
 
 
-def delete_view(request):
-    pass
+def delete_action(request, pk):
+    """
+    Удаление товаров из корзины
+    :param request:
+    :param pk:
+    :return:
+    """
+    if request.is_ajax():
+        product = get_object_or_404(Cart, pk=pk)
+        product.delete()
+
+        cart = CartCommon(request.COOKIES.get('cart_uuid'))
+        result = render_to_string('includes/cart_data.html', {'cart': cart})
+
+        return JsonResponse({'result': result})
 
 
 def checkout_view(request):
     pass
-
-
-def get_cart_uuid(request):
-    response = HttpResponse("Cart uuid")
-
-    cart_uuid = request.COOKIES.get('cart_uuid')
-    if cart_uuid is None:
-        response.set_cookie('cart_uuid', uuid.uuid1())
-
-    return response

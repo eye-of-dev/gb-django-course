@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from authapp.models import ShopUser
 
@@ -23,26 +23,6 @@ class ShopUserRegisterForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(ShopUserRegisterForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-            field.widget.attrs['placeholder'] = field.label
-            field.help_text = ''
-
-    def clean_age(self):
-        age = self.cleaned_data['age']
-        if age < 18:
-            raise forms.ValidationError('Вы слишком молоды!')
-
-        return age
-
-
-class ShopUserChangeForm(UserChangeForm):
-    class Meta:
-        model = ShopUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'age', 'avatar')
-
-    def __init__(self, *args, **kwargs):
-        super(ShopUserChangeForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.widget.attrs['placeholder'] = field.label

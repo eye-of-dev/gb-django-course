@@ -17,12 +17,13 @@
                         <img src="{{ product.image.url }}" alt="{{ product.title }}">
                         <div class="category_social_icon">
                             <ul>
-                                <li><a href="#"><i class="ti-heart"></i></a></li>
+                                <li><a href="{% url 'cabinetapp:wishlist_add' product.id %}"><i
+                                        class="ti-heart"></i></a></li>
                                 <li><a href="{% url 'cartapp:add' product.id %}"><i class="ti-bag"></i></a></li>
                             </ul>
                         </div>
                         <div class="category_product_text">
-                            <a href="{% url 'shop:producty_view' product.category.id product.id %}"><h5>{{ product.title }}</h5></a>
+                            <a href="{% url 'shop:product_view' product.id %}"><h5>{{ product.title }}</h5></a>
                             <p>{{ product.price }} &#8381;</p>
                         </div>
                     </div>

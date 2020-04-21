@@ -4078,6 +4078,7 @@ ul {
   padding: 10px;
   border-left: 1px solid #dddddd;
   display: inline-block;
+  cursor: pointer;
 }
 
 /* line 786, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
@@ -4099,6 +4100,7 @@ ul {
   padding: 10px;
   border-left: 1px solid #dddddd;
   display: inline-block;
+  cursor: pointer;
 }
 
 @media (max-width: 576px) {

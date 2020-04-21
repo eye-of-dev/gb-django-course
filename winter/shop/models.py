@@ -20,6 +20,10 @@ class ProductCategories(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def list_products(self):
+        return Products.objects.filter(category=self.id).all()
+
 
 class Products(models.Model):
     """
