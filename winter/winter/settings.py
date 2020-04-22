@@ -35,12 +35,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'adminapp.apps.AdminappConfig',
     'authapp.apps.AuthappConfig',
     'cabinetapp.apps.CabinetappConfig',
     'cartapp.apps.CartappConfig',
     'contact.apps.ContactConfig',
     'mainpage.apps.MainpageConfig',
-    'shop.apps.ShopConfig'
+    'shop.apps.ShopConfig',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
+
+LOGIN_URL = 'authapp:login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

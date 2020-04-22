@@ -13,7 +13,7 @@ from cabinetapp.models import WishList
 from mainpage.views import ListClass
 
 
-@login_required(login_url='authapp:login')
+@login_required()
 def profile_view(request):
     """
     Обновление личных данных(профиля) на сайте
@@ -41,7 +41,7 @@ class WishlistView(ListClass):
     title = 'Список желаний'
     context_object_name = 'wish_list'
 
-    @method_decorator(login_required(login_url='authapp:login'))
+    @method_decorator(login_required())
     def dispatch(self, request, *args, **kwargs):
         return super(WishlistView, self).dispatch(request, *args, **kwargs)
 
@@ -49,7 +49,7 @@ class WishlistView(ListClass):
         return WishList.objects.filter(user=self.request.user)
 
 
-@login_required(login_url='authapp:login')
+@login_required()
 def wishlist_add(request, pk):
     """
     Функция добавления продукта в списоок желаний
@@ -71,7 +71,7 @@ def wishlist_add(request, pk):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-@login_required(login_url='authapp:login')
+@login_required()
 def wishlist_delete(request, pk):
     """
     Удаление товаров из списка желаний

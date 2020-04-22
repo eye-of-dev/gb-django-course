@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %} Adminside {% endblock %}</title>
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    {% block css %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <div class="container">
+        {% include 'adminapp/includes/nav.html' %}
+        {% block breadcrumb %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -68,6 +68,11 @@
                     Контакты
                 </a>
             </li>
+            {% if user.is_superuser %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:product_categories_index' %}"> Админка </a>
+            </li>
+            {% endif %}
         </ul>
     </div>
     <div class="hearer_icon d-flex">
