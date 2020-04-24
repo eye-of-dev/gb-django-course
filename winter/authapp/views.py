@@ -1,50 +1,34 @@
-from django.contrib import auth
-from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm
 
-from cartapp.models import Cart
+from django.views.generic import CreateView
 
 
-def login_view(request):
-    """
-    Вход в личный кабинет
-    :param request:
-    :return:
-    """
-    if request.user.is_authenticated:
-        return redirect('mainpage:index')
+class LoginClass(LoginView):
+    form_class = ShopUserLoginForm
+    authentication_form = ShopUserLoginForm
+    template_name = 'login.html'
+    redirect_authenticated_user = True
 
-    login_form = ShopUserLoginForm(data=request.POST or None)
+    def get_next(self):
+        return self.request.GET['next'] if 'next' in self.request.GET.keys() else ''
 
-    next = request.GET['next'] if 'next' in request.GET.keys() else ''
+    def get_context_data(self, **kwargs):
+        context = super(LoginClass, self).get_context_data(**kwargs)
+        context['title'] = 'авторизация'
+        context['next'] = self.get_next()
+        return context
 
-    if request.method == 'POST' and login_form.is_valid():
-        username = request.POST['username']
-        password = request.POST['password']
 
-        user = auth.authenticate(username=username, password=password)
-        if user and user.is_active:
-            auth.login(request, user)
+class RegistrationClass(CreateView):
+    pass
 
-            """
-            При авторазации проверяем делал ли заказы пользователь как гость. 
-            Если есть, то прикрепляем эти заказы авторизованному пользователю.
-            """
-            Cart.objects.filter(cart_uuid=request.COOKIES.get('cart_uuid')).all().update(user=request.user)
 
-            if 'next' in request.POST.keys():
-                return redirect(request.POST['next'])
-
-            return redirect('mainpage:index')
-
-    content = {
-        'title': 'авторизация',
-        'login_form': login_form,
-        'next': next
-    }
-    return render(request, 'login.html', content)
+class LogoutClass(LogoutView):
+    template_name = None
+    next_page = 'mainpage:index'
 
 
 def registration_view(request):
@@ -66,8 +50,3 @@ def registration_view(request):
         'register_form': register_form
     }
     return render(request, 'registration.html', content)
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('mainpage:index')

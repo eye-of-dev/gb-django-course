@@ -36,22 +36,22 @@
             <div class="col-lg-6 col-md-6">
                 <div class="login_part_form">
                     <div class="login_part_form_iner">
-                        <h3>Добро пожаловать назад! <br>
-                            Пожалуйста, авторизуйтесь на сайте.</h3>
-                        <form class="row contact_form" action="{% url 'authapp:login' %}" method="post" novalidate="novalidate">
+                        <h3>Добро пожаловать назад! <br>Пожалуйста, авторизуйтесь на сайте.</h3>
+                        <form class="row contact_form" action="{% url 'authapp:login' %}" method="post"
+                              novalidate="novalidate">
                             {% csrf_token %}
 
                             {% if next %}
-                            <input type="hidden" name="next" value="{{ next }}" >
+                            <input type="hidden" name="next" value="{{ next }}">
                             {% endif %}
 
                             <div class="col-md-12 form-group p_star">
-                                {{ login_form.username.errors }}
-                                {{ login_form.username }}
+                                {{ form.username.errors }}
+                                {{ form.username }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ login_form.password.errors }}
-                                {{ login_form.password }}
+                                {{ form.password.errors }}
+                                {{ form.password }}
                             </div>
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit" class="btn_3">Войти</button>

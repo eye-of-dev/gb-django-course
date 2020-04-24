@@ -66,6 +66,7 @@ def product_categories_update(request, pk):
     return render(request, 'product_categories/update.html', content)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def product_categories_delete(request, pk):
     category = get_object_or_404(ProductCategories, pk=pk)
     category.delete()

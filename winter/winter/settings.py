@@ -132,4 +132,6 @@ AUTH_USER_MODEL = 'authapp.ShopUser'
 
 LOGIN_URL = 'authapp:login'
 
+LOGIN_REDIRECT_URL = 'mainpage:index'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
