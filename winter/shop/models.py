@@ -10,6 +10,7 @@ class ProductCategories(models.Model):
     """
     title = models.CharField('Название категории', max_length=128, unique=True)
     short_description = models.CharField('Краткое описание', max_length=255, null=True, blank=True)
+    is_active = models.BooleanField('Статус', default=0)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
 

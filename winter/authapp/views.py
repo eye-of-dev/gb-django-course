@@ -13,6 +13,9 @@ def login_view(request):
     :param request:
     :return:
     """
+    if request.user.is_authenticated:
+        return redirect('mainpage:index')
+
     login_form = ShopUserLoginForm(data=request.POST or None)
 
     next = request.GET['next'] if 'next' in request.GET.keys() else ''
@@ -50,6 +53,8 @@ def registration_view(request):
     :param request:
     :return:
     """
+    if request.user.is_authenticated:
+        return redirect('mainpage:index')
 
     register_form = ShopUserRegisterForm(request.POST, request.FILES)
     if request.method == 'POST' and register_form.is_valid():

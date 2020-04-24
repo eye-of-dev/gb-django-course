@@ -19,8 +19,8 @@ from . import settings
 from django.contrib.staticfiles.urls import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('mainpage.urls', namespace='mainpage')),
+    path('admin/', include('adminapp.urls', namespace='admin')),
     path('auth/', include('authapp.urls', namespace='authapp')),
     path('cabinet/', include('cabinetapp.urls', namespace='cabinetapp')),
     path('cart/', include('cartapp.urls', namespace='cartapp')),
