@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 
-# Create your views here.
-from shop.models import ProductCategories
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
+from shop.models import ProductCategories, Products
 
 from adminapp.forms import ProductCategoriesAdminForm
 
@@ -71,3 +73,78 @@ def product_categories_delete(request, pk):
     category = get_object_or_404(ProductCategories, pk=pk)
     category.delete()
     return redirect('adminapp:product_categories_index')
+
+
+class ProductsListView(ListView):
+    model = Products
+    template_name = 'products/list.html'
+    context_object_name = 'products'
+    ordering = '-pk'
+    paginate_by = 5
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductsListView, self).get_context_data(**kwargs)
+        context['title'] = 'Список продуктов'
+        return context
+
+
+class ProductsCreateView(CreateView):
+    model = Products
+    template_name = 'products/create.html'
+    success_url = reverse_lazy('admin:products_list')
+    fields = '__all__'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductsCreateView, self).get_context_data(**kwargs)
+        context['title'] = 'Создание продукта'
+        return context
+
+
+class ProductsReadView(DetailView):
+    model = Products
+    template_name = 'products/read.html'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductsReadView, self).get_context_data(**kwargs)
+        context['title'] = 'Просмотр продукта: ' + self.object.title
+        return context
+
+
+class ProductsUpdateView(UpdateView):
+    model = Products
+    template_name = 'products/update.html'
+    success_url = reverse_lazy('admin:products_list')
+    fields = '__all__'
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductsUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Обновление продукта: ' + self.object.title
+        return context
+
+
+class ProductsDeleteView(DeleteView):
+    model = Products
+    success_url = reverse_lazy('admin:products_list')
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)

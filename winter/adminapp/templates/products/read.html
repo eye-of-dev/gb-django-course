@@ -1,0 +1,61 @@
+{% extends 'adminapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
+{% block breadcrumb %}
+{% include 'adminapp/includes/breadcrumb.html' %}
+{% endblock %}
+{% block content %}
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <th>Категория</th>
+        <td>{{ object.category.title }}</td>
+    </tr>
+    <tr>
+        <th>Название продукта</th>
+        <td>{{ object.title }}</td>
+    </tr>
+    <tr>
+        <th>Изображение продукта</th>
+        <td><img src="{{ object.image.url }}" alt="{{ object.title }}"></td>
+    </tr>
+    <tr>
+        <th>Краткое описание</th>
+        <td>{{ object.short_description }}</td>
+    </tr>
+    <tr>
+        <th>Описание продукта</th>
+        <td>{{ object.description }}</td>
+    </tr>
+    <tr>
+        <th>Цена продукта</th>
+        <td>{{ object.price }}</td>
+    </tr>
+    <tr>
+        <th>Колличество на складе</th>
+        <td>{{ object.quantity }}</td>
+    </tr>
+    <tr>
+        <th>Статус</th>
+        <td>
+            {% if object.is_active %}
+            Активн
+            {% else %}
+            Не активн
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Дата создания</th>
+        <td>{{ object.created_at }}</td>
+    </tr>
+    <tr>
+        <th>Дата обновления</th>
+        <td>{{ object.updated_at }}</td>
+    </tr>
+    </tbody>
+</table>
+<div class="form-group">
+    <a href="{% url 'adminapp:products_list' %}" class="btn btn-default">Назад</a>
+</div>
+{% endblock %}

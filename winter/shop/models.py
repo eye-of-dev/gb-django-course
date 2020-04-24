@@ -37,6 +37,7 @@ class Products(models.Model):
     description = models.TextField('Описание продукта', null=True, blank=True)
     price = models.DecimalField('Цена продукта', max_digits=8, decimal_places=2, default=0)
     quantity = models.IntegerField('Колличество на складе', default=0)
+    is_active = models.BooleanField('Статус', default=0)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
 
