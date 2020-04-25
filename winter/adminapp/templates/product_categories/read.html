@@ -9,16 +9,16 @@
     <tbody>
     <tr>
         <th>Название</th>
-        <td>{{ category.title }}</td>
+        <td>{{ object.title }}</td>
     </tr>
     <tr>
         <th>Краткое описание</th>
-        <td>{{ category.short_description }}</td>
+        <td>{{ object.short_description }}</td>
     </tr>
     <tr>
         <th>Статус</th>
         <td>
-            {% if category.is_active %}
+            {% if object.is_active %}
             Активна
             {% else %}
             Не активна
@@ -27,11 +27,11 @@
     </tr>
     <tr>
         <th>Дата создания</th>
-        <td>{{ category.created_at }}</td>
+        <td>{{ object.created_at }}</td>
     </tr>
     <tr>
         <th>Дата обновления</th>
-        <td>{{ category.updated_at }}</td>
+        <td>{{ object.updated_at }}</td>
     </tr>
     </tbody>
 </table>

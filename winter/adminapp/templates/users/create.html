@@ -5,6 +5,6 @@
 {% include 'adminapp/includes/breadcrumb.html' %}
 {% endblock %}
 {% block content %}
-    {% url 'adminapp:products_update' object.id as update_url %}
-    {% include 'products/_form.html' with url=update_url button='Обновить' %}
+    {% url 'adminapp:users_create' as create_url %}
+    {% include 'users/_form.html' with url=create_url button='Создать'%}
 {% endblock %}
