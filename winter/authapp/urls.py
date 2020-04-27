@@ -1,11 +1,12 @@
 from django.urls import path
 
 from . import views
+from .views import LoginClass, LogoutClass
 
 app_name = 'authapp'
 
 urlpatterns = [
-    path('login/', views.login_view, name='login'),
+    path('login/', LoginClass.as_view(), name='login'),
     path('registration/', views.registration_view, name='registration'),
-    path('logout/', views.logout_view, name='logout')
+    path('logout/', LogoutClass.as_view(), name='logout')
 ]

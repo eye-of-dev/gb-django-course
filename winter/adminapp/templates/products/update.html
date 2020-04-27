@@ -1,0 +1,10 @@
+{% extends 'adminapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
+{% block breadcrumb %}
+{% include 'adminapp/includes/breadcrumb.html' %}
+{% endblock %}
+{% block content %}
+    {% url 'adminapp:products_update' object.id as update_url %}
+    {% include 'products/_form.html' with url=update_url button='Обновить' %}
+{% endblock %}

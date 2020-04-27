@@ -8,20 +8,40 @@
 <table class="table table-bordered">
     <tbody>
     <tr>
-        <th>Название</th>
+        <th>Категория</th>
+        <td>{{ object.category.title }}</td>
+    </tr>
+    <tr>
+        <th>Название продукта</th>
         <td>{{ object.title }}</td>
+    </tr>
+    <tr>
+        <th>Изображение продукта</th>
+        <td><img src="{{ object.image.url }}" alt="{{ object.title }}"></td>
     </tr>
     <tr>
         <th>Краткое описание</th>
         <td>{{ object.short_description }}</td>
     </tr>
     <tr>
+        <th>Описание продукта</th>
+        <td>{{ object.description }}</td>
+    </tr>
+    <tr>
+        <th>Цена продукта</th>
+        <td>{{ object.price }}</td>
+    </tr>
+    <tr>
+        <th>Колличество на складе</th>
+        <td>{{ object.quantity }}</td>
+    </tr>
+    <tr>
         <th>Статус</th>
         <td>
             {% if object.is_active %}
-            Активна
+            Активн
             {% else %}
-            Не активна
+            Не активн
             {% endif %}
         </td>
     </tr>
@@ -36,6 +56,6 @@
     </tbody>
 </table>
 <div class="form-group">
-    <a href="{% url 'adminapp:product_categories_index' %}" class="btn btn-default">Назад</a>
+    <a href="{% url 'adminapp:products_list' %}" class="btn btn-default">Назад</a>
 </div>
 {% endblock %}

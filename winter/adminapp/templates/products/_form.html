@@ -1,0 +1,10 @@
+{% load crispy_forms_tags %}
+<form action="{{ url }}" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <div class="form-group">
+        <button type="submit" value="submit" class="btn btn-success">{{ button }}</button>
+        <a href="{% url 'adminapp:products_list' %}" class="btn btn-default">Назад</a>
+    </div>
+</form>
