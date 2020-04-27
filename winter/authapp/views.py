@@ -1,9 +1,10 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm
+from django.urls import reverse_lazy
 
-from django.views.generic import CreateView
+from django.views.generic import FormView
 
 
 class LoginClass(LoginView):
@@ -22,31 +23,22 @@ class LoginClass(LoginView):
         return context
 
 
-class RegistrationClass(CreateView):
-    pass
+class RegistrationClass(FormView):
+    form_class = ShopUserRegisterForm
+    template_name = 'registration.html'
+    success_url = reverse_lazy('authapp:login')
+
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationClass, self).get_context_data(**kwargs)
+        context['title'] = 'регистрация'
+        return context
+
+    def form_valid(self, form):
+        register_form = self.form_class(self.request.POST, self.request.FILES)
+        register_form.save()
+        return redirect(self.success_url)
 
 
 class LogoutClass(LogoutView):
     template_name = None
     next_page = 'mainpage:index'
-
-
-def registration_view(request):
-    """
-    Регистрация на сайте
-    :param request:
-    :return:
-    """
-    if request.user.is_authenticated:
-        return redirect('mainpage:index')
-
-    register_form = ShopUserRegisterForm(request.POST, request.FILES)
-    if request.method == 'POST' and register_form.is_valid():
-        register_form.save()
-        return redirect('authapp:login')
-
-    content = {
-        'title': 'регистрация',
-        'register_form': register_form
-    }
-    return render(request, 'registration.html', content)

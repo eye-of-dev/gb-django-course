@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load crispy_forms_tags %}
 {% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
 {% block body_class %}bg-white{% endblock %}
 {% block content %}
@@ -42,36 +42,28 @@
                         <form class="row contact_form" action="{% url 'authapp:registration' %}" method="post" novalidate="novalidate" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.username.errors }}
-                                {{ register_form.username }}
+                                {{ form.username|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.first_name.errors }}
-                                {{ register_form.first_name }}
+                                {{ form.first_name|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.last_name.errors }}
-                                {{ register_form.last_name }}
+                                {{ form.last_name|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.email.errors }}
-                                {{ register_form.email }}
+                                {{ form.email|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.age.errors }}
-                                {{ register_form.age }}
+                                {{ form.age|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.avatar.errors }}
-                                {{ register_form.avatar }}
+                                {{ form.avatar|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.password1.errors }}
-                                {{ register_form.password1 }}
+                                {{ form.password1|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group p_star">
-                                {{ register_form.password2.errors }}
-                                {{ register_form.password2 }}
+                                {{ form.password2|as_crispy_field }}
                             </div>
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit" class="btn_3">Зарегистрироваться</button>
