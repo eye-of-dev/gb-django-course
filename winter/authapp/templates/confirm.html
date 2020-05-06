@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
+{% block body_class %}bg-white{% endblock %}
+{% block content %}
+<!--================Home Banner Area =================-->
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Главная / Подтверждение почты</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+
+<!--================login_part Area =================-->
+<section class="blog_area single-post-area section_padding">
+    <div class="container ">
+        {% if authenticated %}
+        <h2 class="text-center">Ура Ваш E-mail подтвержден</h2>
+        <div class="quote-wrapper">
+            <div class="quotes">
+                Ваш аккаунт активирован теперь можете авторизрваться в личном кабинете
+            </div>
+        </div>
+        <div class=" text-center">
+            <a href="{% url 'authapp:login' %}" class="btn_3">Войти</a>
+        </div>
+        {% else %}
+        <h2 class="text-center">Необходимо подтвердить E-mail</h2>
+        <div class="quote-wrapper">
+            <div class="quotes">
+                Для авторизации на сайте подтвердите свою почту. Мы выслали Вам письмо с ссылкой для авторизации.
+                Просто перейдите по ней.
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<!--================login_part end =================-->
+
+{% endblock %}
+{% block instagram_photo %}
+{% include 'includes/instagram_photo.html' %}
+{% endblock %}

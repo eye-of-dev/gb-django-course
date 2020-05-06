@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'mainpage.context_processors.cart',
             ],
         },
     },
@@ -133,5 +134,16 @@ AUTH_USER_MODEL = 'authapp.ShopUser'
 LOGIN_URL = 'authapp:login'
 
 LOGIN_REDIRECT_URL = 'mainpage:index'
+
+DOMAIN_NAME = 'http://127.0.0.1:8000'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = 'django@winter.local'
+EMAIL_HOST_PASSWORD = 'winter'
+EMAIL_USE_SSL = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_FILE_PATH = '/tmp/email-messages' # change this to a proper location
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
