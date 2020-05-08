@@ -1,9 +1,14 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, get_object_or_404
 
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm
+from authapp.models import ShopUser
 
-from django.views.generic import CreateView
+from django.urls import reverse_lazy
+
+from django.views.generic import FormView
+
+from mainpage.views import TemplateClass
 
 
 class LoginClass(LoginView):
@@ -22,31 +27,45 @@ class LoginClass(LoginView):
         return context
 
 
-class RegistrationClass(CreateView):
-    pass
+class RegistrationClass(FormView):
+    form_class = ShopUserRegisterForm
+    template_name = 'registration.html'
+    success_url = reverse_lazy('authapp:confirm')
+
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationClass, self).get_context_data(**kwargs)
+        context['title'] = 'регистрация'
+        return context
+
+    def form_valid(self, form):
+        register_form = self.form_class(self.request.POST, self.request.FILES)
+        user = register_form.save()
+        user.send_verify_mail()
+        return redirect(self.success_url)
+
+
+class ConfirmClass(TemplateClass):
+    template_name = 'confirm.html'
+    title = 'подтверждение почты'
+    authenticated = False
+
+    def get_context_data(self, **kwargs):
+        context = super(ConfirmClass, self).get_context_data(**kwargs)
+        context['authenticated'] = self.authenticated
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = super(ConfirmClass, self).get_context_data(**kwargs)
+        if 'activation_key' in self.kwargs:
+            user = get_object_or_404(ShopUser, is_active=False, activation_key=self.kwargs['activation_key'])
+            if not user.is_activation_key_expired:
+                user.is_active = True
+                user.save()
+                context['authenticated'] = True
+
+        return self.render_to_response(context)
 
 
 class LogoutClass(LogoutView):
     template_name = None
     next_page = 'mainpage:index'
-
-
-def registration_view(request):
-    """
-    Регистрация на сайте
-    :param request:
-    :return:
-    """
-    if request.user.is_authenticated:
-        return redirect('mainpage:index')
-
-    register_form = ShopUserRegisterForm(request.POST, request.FILES)
-    if request.method == 'POST' and register_form.is_valid():
-        register_form.save()
-        return redirect('authapp:login')
-
-    content = {
-        'title': 'регистрация',
-        'register_form': register_form
-    }
-    return render(request, 'registration.html', content)

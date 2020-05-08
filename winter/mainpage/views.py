@@ -5,8 +5,6 @@ import uuid
 
 from django.views.generic import TemplateView, DetailView, ListView
 
-from cartapp.models import CartCommon
-
 
 class CommonClass:
     """
@@ -23,16 +21,12 @@ class CommonClass:
         response.set_cookie('cart_uuid', value=cart_uuid, max_age=30 * 24 * 60 * 60)
         return response
 
-    def cart(self):
-        return CartCommon(self.request.COOKIES.get('cart_uuid'))
-
 
 class TemplateClass(CommonClass, TemplateView):
     title = None
 
     def get_context_data(self, **kwargs):
         context = super(TemplateClass, self).get_context_data(**kwargs)
-        context['cart'] = self.cart()
         context['title'] = self.title
         return context
 
@@ -40,7 +34,6 @@ class TemplateClass(CommonClass, TemplateView):
 class DetailClass(CommonClass, DetailView):
     def get_context_data(self, **kwargs):
         context = super(DetailClass, self).get_context_data(**kwargs)
-        context['cart'] = self.cart()
         context['title'] = self.object.title
         return context
 
@@ -50,7 +43,6 @@ class ListClass(CommonClass, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ListClass, self).get_context_data(**kwargs)
-        context['cart'] = self.cart()
         context['title'] = self.title
         return context
 
