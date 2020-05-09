@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load crispy_forms_tags %}
 {% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
 {% block body_class %}bg-white{% endblock %}
 {% block content %}
@@ -30,28 +30,34 @@
                     <form class="row tracking_form" action="{% url 'cabinetapp:profile' %}" method="post" novalidate="novalidate" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="col-md-12 form-group">
-                            {{ change_form.username.errors }}
-                            {{ change_form.username }}
+                            {{ user_form.username|as_crispy_field }}
                         </div>
                         <div class="col-md-12 form-group">
-                            {{ change_form.first_name.errors }}
-                            {{ change_form.first_name }}
+                            {{ user_form.first_name|as_crispy_field }}
                         </div>
                         <div class="col-md-12 form-group">
-                            {{ change_form.last_name.errors }}
-                            {{ change_form.last_name }}
+                            {{ user_form.last_name|as_crispy_field }}
                         </div>
                         <div class="col-md-12 form-group">
-                            {{ change_form.email.errors }}
-                            {{ change_form.email }}
+                            {{ user_form.email|as_crispy_field }}
                         </div>
                         <div class="col-md-12 form-group">
-                            {{ change_form.age.errors }}
-                            {{ change_form.age }}
+                            {{ user_form.age|as_crispy_field }}
                         </div>
                         <div class="col-md-12 form-group">
-                            {{ change_form.avatar.errors }}
-                            {{ change_form.avatar }}
+                            {{ user_form.avatar|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ profile_form.about|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ profile_form.gender|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ profile_form.locale|as_crispy_field }}
+                        </div>
+                        <div class="col-md-12 form-group">
+                            {{ profile_form.link|as_crispy_field }}
                         </div>
                         <div class="col-md-12 form-group">
                             <button type="submit" value="submit" class="btn_3">Обновить</button>

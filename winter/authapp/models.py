@@ -3,6 +3,8 @@ from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.timezone import now
 
@@ -30,3 +32,36 @@ class ShopUser(AbstractUser):
                   f'{winter.settings.DOMAIN_NAME}{verify_link}'
 
         return send_mail(title, message, winter.settings.EMAIL_HOST_USER, [self.email], fail_silently=False)
+
+
+class ShopUserProfile(models.Model):
+    MALE = 'M'
+    FEMALE = 'W'
+
+    GENDER_CHOICES = (
+        (MALE, 'M'),
+        (FEMALE, 'W')
+    )
+
+    LANG_RU = 'ru'
+    LANG_EN = 'en'
+
+    LANG_CHOICES = (
+        (LANG_RU, 'RU'),
+        (LANG_EN, 'EN')
+    )
+
+    user = models.OneToOneField(ShopUser, unique=True, null=False, db_index=True, on_delete=models.CASCADE)
+    about = models.TextField('О себе', max_length=512, blank=True)
+    gender = models.CharField('Пол', max_length=1, choices=GENDER_CHOICES, blank=True)
+    locale = models.CharField('Язык', max_length=2, choices=LANG_CHOICES, blank=True)
+    link = models.CharField('Адрес страницы', max_length=255, blank=True)
+
+    @receiver(post_save, sender=ShopUser)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            ShopUserProfile.objects.create(user=instance)
+
+    @receiver(post_save, sender=ShopUser)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.shopuserprofile.save()
