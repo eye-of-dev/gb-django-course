@@ -569,6 +569,7 @@ ul {
 }
 
 /* line 52, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_button.scss */
+.login_part .social_icon a:hover,
 .btn_3:hover {
   background-color: red;
   color: #fff;
@@ -5535,10 +5536,18 @@ ul {
 }
 
 /* line 2023, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
+.login_part .social_icon,
 .login_part .form-group .btn_3 {
   display: block;
-  width: 100%;
   margin: 30px 0 17px;
+}
+
+.login_part .form-group .btn_3 {
+    float: left;
+}
+
+.login_part .social_icon {
+    float: right;
 }
 
 /* line 2029, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
@@ -5664,6 +5673,7 @@ ul {
 }
 
 /* line 2140, /Applications/MAMP/htdocs/palash/cl/august 2019/202. Shop/202 shop html/sass/_product.scss */
+.login_part .social_icon a,
 .card_area .social_icon a {
   display: inline-block;
   border-radius: 50%;

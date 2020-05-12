@@ -1,10 +1,9 @@
 from django import forms
 
 from contact.models import Feedback
-from django.forms import ModelForm
 
 
-class FeedbackForm(ModelForm):
+class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
         fields = ('name', 'email', 'subject', 'description')

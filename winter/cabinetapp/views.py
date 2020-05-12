@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.shortcuts import render, redirect, get_object_or_404
 
-from cabinetapp.forms import ShopUserProfileForm
+from cabinetapp.forms import ShopUserEditForm, ShopUserProfileEditForm
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 
@@ -14,6 +14,7 @@ from mainpage.views import ListClass
 
 
 @login_required()
+@transaction.atomic
 def profile_view(request):
     """
     Обновление личных данных(профиля) на сайте
@@ -21,16 +22,20 @@ def profile_view(request):
     :return:
     """
     if request.method == 'POST':
-        change_form = ShopUserProfileForm(request.POST, request.FILES, instance=request.user)
-        if change_form.is_valid():
-            change_form.save()
+        user_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
+        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
             return redirect('cabinetapp:profile')
     else:
-        change_form = ShopUserProfileForm(instance=request.user)
+        user_form = ShopUserEditForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
     content = {
         'title': 'редактирование профиля',
-        'change_form': change_form
+        'user_form': user_form,
+        'profile_form': profile_form
     }
     return render(request, 'profile.html', content)
 
