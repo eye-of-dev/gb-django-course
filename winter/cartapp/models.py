@@ -1,14 +1,15 @@
-from django.conf import settings
 from django.db import models
 from django.db.models import Sum
+
+import winter.settings
 
 from shop.models import Products
 
 
 class Cart(models.Model):
     cart_uuid = models.CharField('Идентификатор корзины', max_length=255)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь', null=True,
-                             blank=True)
+    user = models.ForeignKey(winter.settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь',
+                             null=True, blank=True)
     product = models.ForeignKey(Products, on_delete=models.CASCADE, verbose_name='Продукт')
     quantity = models.PositiveSmallIntegerField('Колличество', default=0)
     price = models.DecimalField('Цена продукта', max_digits=8, decimal_places=2, default=0)

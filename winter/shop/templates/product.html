@@ -2,16 +2,8 @@
 {% load static %}
 {% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
 {% block css %}
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-<!-- animate CSS -->
-<link rel="stylesheet" href="{% static '/css/animate.css' %}">
 <link rel="stylesheet" href="{% static 'css/lightslider.min.css' %}">
-<!-- font awesome CSS -->
-<link rel="stylesheet" href="{% static 'css/all.css' %}">
-<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
-<!-- style CSS -->
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{{ block.super }}
 {% endblock %}
 {% block body_class %}bg-white{% endblock %}
 {% block content %}

@@ -45,7 +45,7 @@ class RegistrationClass(FormView):
 
 
 class ConfirmClass(TemplateClass):
-    template_name = 'confirm.html'
+    template_name = 'success.html'
     title = 'подтверждение почты'
     authenticated = False
 
