@@ -10,6 +10,8 @@ from django.utils.timezone import now
 
 import winter.settings
 
+from cartapp.models import CartCommon
+
 
 class ShopUser(AbstractUser):
     avatar = models.ImageField('Аватар', upload_to='users_avatars', blank=True)

@@ -2,17 +2,8 @@
 {% load static %}
 {% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
 {% block css %}
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
-<!-- animate CSS -->
-<link rel="stylesheet" href="{% static '/css/animate.css' %}">
-<!-- font awesome CSS -->
-<link rel="stylesheet" href="{% static 'css/all.css' %}">
-<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
-<link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
 <link rel="stylesheet" href="{% static 'css/price_rangs.css' %}">
-<!-- style CSS -->
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{{ block.super }}
 {% endblock %}
 {% block body_class %}bg-white{% endblock %}
 
@@ -124,23 +115,23 @@
                             <div class="single_product_menu product_bar_item">
                                 <h2>Товары ({{ list_products.count }})</h2>
                             </div>
-<!--                            <div class="product_top_bar_iner product_bar_item d-flex">-->
-<!--                                <div class="product_bar_single">-->
-<!--                                    <select class="wide">-->
-<!--                                        <option data-display="Default sorting">Default sorting</option>-->
-<!--                                        <option value="1">Some option</option>-->
-<!--                                        <option value="2">Another option</option>-->
-<!--                                        <option value="3">Potato</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                                <div class="product_bar_single">-->
-<!--                                    <select>-->
-<!--                                        <option data-display="Show 12">Show 12</option>-->
-<!--                                        <option value="1">Show 20</option>-->
-<!--                                        <option value="2">Show 30</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div class="product_top_bar_iner product_bar_item d-flex">-->
+                            <!--                                <div class="product_bar_single">-->
+                            <!--                                    <select class="wide">-->
+                            <!--                                        <option data-display="Default sorting">Default sorting</option>-->
+                            <!--                                        <option value="1">Some option</option>-->
+                            <!--                                        <option value="2">Another option</option>-->
+                            <!--                                        <option value="3">Potato</option>-->
+                            <!--                                    </select>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="product_bar_single">-->
+                            <!--                                    <select>-->
+                            <!--                                        <option data-display="Show 12">Show 12</option>-->
+                            <!--                                        <option value="1">Show 20</option>-->
+                            <!--                                        <option value="2">Show 30</option>-->
+                            <!--                                    </select>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                         </div>
                     </div>
                     {% for product in list_products %}

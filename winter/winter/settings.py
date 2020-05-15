@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'authapp.apps.AuthappConfig',
     'cabinetapp.apps.CabinetappConfig',
     'cartapp.apps.CartappConfig',
+    'checkoutapp.apps.CheckoutappConfig',
     'contact.apps.ContactConfig',
     'mainpage.apps.MainpageConfig',
+    'orderapp.apps.OrderappConfig',
     'shop.apps.ShopConfig',
     'crispy_forms',
     'social_django'
@@ -164,7 +166,8 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1077300232085-smloim6hmit798vri48dv0ses60qak4p.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'vNSBVERY-EXVPLMtPi_eAwvE'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['profile', 'email', 'https://www.googleapis.com/auth/user.birthday.read', 'https://www.googleapis.com/auth/user.gender.read']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['profile', 'email', 'https://www.googleapis.com/auth/user.birthday.read',
+                                   'https://www.googleapis.com/auth/user.gender.read']
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -177,4 +180,3 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
-
