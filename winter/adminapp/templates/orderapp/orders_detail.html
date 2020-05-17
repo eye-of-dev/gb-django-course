@@ -1,0 +1,57 @@
+{% extends 'adminapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} {{ title|title }} - {{ block.super }} {% endblock %}
+{% block breadcrumb %}
+{% include 'adminapp/includes/breadcrumb.html' %}
+{% endblock %}
+{% block content %}
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <th>ID заказа</th>
+        <td>{{ object.pk }}</td>
+    </tr>
+    <tr>
+        <th>Пользователь</th>
+        <td>{{ object.ordersuserinfo.user_name }}</td>
+    </tr>
+    <tr>
+        <th>Сумма заказа</th>
+        <td>{{ object.total }}</td>
+    </tr>
+    <tr>
+        <th>Комментарий</th>
+        <td>{{ object.comment }}</td>
+    </tr>
+    <tr>
+        <th>Дата создания</th>
+        <td>{{ object.created_at }}</td>
+    </tr>
+    <tr>
+        <th>Дата обновления</th>
+        <td>{{ object.updated_at }}</td>
+    </tr>
+    </tbody>
+</table>
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Товар</th>
+            <th scope="col">Колличетсво</th>
+            <th scope="col">Цена за единицу</th>
+        </tr>
+    </thead>
+    {% for products in object.get_orders_products %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ products.product }}</td>
+        <td>{{ products.quantity }}</td>
+        <td>{{ products.price }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="form-group">
+    <a href="{% url 'adminapp:orders_list' %}" class="btn btn-default">Назад</a>
+</div>
+{% endblock %}

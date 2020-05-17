@@ -7,7 +7,7 @@ from mainpage.views import TemplateClass
 
 from checkoutapp.forms import CheckoutForm
 
-from orderapp.models import Order, OrderUserInfo, OrderProducts
+from orderapp.models import Orders, OrdersUserInfo, OrdersProducts
 
 from cartapp.models import CartCommon
 
@@ -27,15 +27,15 @@ class CheckoutClass(FormView):
 
         with transaction.atomic():
             # так себе код, лучше написать не хватает знаний и опыта
-            order = Order(total=cart.total_cart_price_products, comment=self.request.POST['comment'])
+            order = Orders(total=cart.total_cart_price_products, comment=self.request.POST['comment'])
             order.save()
-            order.orderuserinfo.first_name = self.request.POST['first_name']
-            order.orderuserinfo.last_name = self.request.POST['last_name']
-            order.orderuserinfo.email = self.request.POST['email']
+            order.ordersuserinfo.first_name = self.request.POST['first_name']
+            order.ordersuserinfo.last_name = self.request.POST['last_name']
+            order.ordersuserinfo.email = self.request.POST['email']
             order.save()
 
             for model in cart.get_user_products():
-                order_product = OrderProducts(order=order, product=model.product)
+                order_product = OrdersProducts(order=order, product=model.product)
                 order_product.quantity = model.quantity
                 order_product.price = model.price
                 order_product.save()

@@ -2,11 +2,18 @@ from django.urls import path
 
 from .views import ProductsListView, ProductsCreateView, ProductsUpdateView, ProductsReadView, ProductsDeleteView, \
     UsersListView, UsersCreateView, UsersReadView, UsersUpdateView, UsersDeleteView, ProductsCategoriesListView, \
-    ProductsCategoriesCreateView, ProductsCategoriesReadView, ProductsCategoriesUpdateView, ProductsCategoriesDeleteView
+    ProductsCategoriesCreateView, ProductsCategoriesReadView, ProductsCategoriesUpdateView, \
+    ProductsCategoriesDeleteView, OrdersListView, OrdersUpdateView, OrdersReadView, OrdersDeleteView
 
 app_name = 'adminapp'
 
 urlpatterns = [
+    path('orders/index', OrdersListView.as_view(), name='orders_list'),
+    # path('orderapp/create', OrdersCreateView.as_view(), name='orders_create'),
+    path('orders/read/<int:pk>', OrdersReadView.as_view(), name='orders_read'),
+    path('orders/update/<int:pk>', OrdersUpdateView.as_view(), name='orders_update'),
+    path('orderapp/delete/<int:pk>', OrdersDeleteView.as_view(), name='orders_delete'),
+
     path('product-categories/index', ProductsCategoriesListView.as_view(), name='product_categories_index'),
     path('product-categories/create', ProductsCategoriesCreateView.as_view(), name='product_categories_create'),
     path('product-categories/read/<int:pk>', ProductsCategoriesReadView.as_view(), name='product_categories_read'),
