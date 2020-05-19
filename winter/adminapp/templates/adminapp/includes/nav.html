@@ -2,11 +2,16 @@
     <li class="nav-item">
         <a class="nav-link" href="{% url 'mainpage:index' %}">На сайт</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'admin:product_categories_index' %}">Категори</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true"
+           aria-expanded="false">Магазин</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'admin:product_categories_index' %}">Категори</a>
+            <a class="dropdown-item" href="{% url 'admin:products_list' %}">Продукты</a>
+        </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'admin:products_list' %}">Продукты</a>
+        <a class="nav-link" href="{% url 'admin:orders_list' %}">Заказы</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{% url 'admin:users_list' %}">Пользователи</a>

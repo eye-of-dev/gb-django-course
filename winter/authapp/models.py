@@ -10,14 +10,16 @@ from django.utils.timezone import now
 
 import winter.settings
 
-from cartapp.models import CartCommon
-
 
 class ShopUser(AbstractUser):
     avatar = models.ImageField('Аватар', upload_to='users_avatars', blank=True)
     age = models.PositiveIntegerField('Возраст', default=18)
     activation_key = models.CharField('Ключ активации', max_length=128, blank=True)
     activation_key_expires = models.DateTimeField('Время жизни ключа', default=(now() + timedelta(hours=48)))
+
+    @property
+    def user_name(self):
+        return f'{self.first_name} {self.last_name} - ({self.email})'
 
     @property
     def is_activation_key_expired(self):
