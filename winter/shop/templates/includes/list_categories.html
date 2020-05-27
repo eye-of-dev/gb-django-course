@@ -4,7 +4,7 @@
     </div>
     <div class="widgets_inner">
         <ul class="list list-categories">
-            {% for model in list_categories %}
+        {% for model in list_categories %}
             {% if model.sub_categories %}
             <li class="sub-menu">
                 <a href="{{ category.href }}" class=" d-flex justify-content-between">
@@ -17,11 +17,12 @@
                     {% endfor %}
                 </ul>
             <li>
-                {% else %}
-            <li class="{% if model.id == category.id %}active{% endif %}"><a
-                    href="{% url 'shop:category_view' model.id %}">{{ model.title }}</a></li>
+            {% else %}
+            <li class="{% if model.id == category.id %}active{% endif %}">
+                <a href="{% url 'shop:category_view' model.id %}">{{ model.title }}</a>
+            </li>
             {% endif %}
-            {% endfor %}
+        {% endfor %}
         </ul>
     </div>
 </aside>

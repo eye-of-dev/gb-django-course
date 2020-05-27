@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Sum
 
 import winter.settings
+from django.utils.functional import cached_property
 
 from shop.models import Products
 
@@ -50,13 +51,17 @@ class CartCommon:
         """
         return Cart.objects.filter(cart_uuid=self.cart_uuid).count()
 
+    @cached_property
+    def count_products_cached(self):
+        return Cart.objects.filter(cart_uuid=self.cart_uuid).aggregate(Sum('quantity'));
+
     @property
     def total_cart_all_products(self):
         """
         Получаем общее колличество товаров в корзине
         :return:
         """
-        count_products = Cart.objects.filter(cart_uuid=self.cart_uuid).aggregate(Sum('quantity'))
+        count_products = self.count_products_cached
         if count_products['quantity__sum']:
             return count_products['quantity__sum']
 
