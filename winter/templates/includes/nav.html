@@ -79,9 +79,7 @@
         <div class="cart">
             <a href="{% url 'cartapp:index' %}">
                 <i class="ti-bag">
-                    {% if cart.total_cart_all_products %}
                     <span class="cart_count">{{ cart.total_cart_all_products }}</span>
-                    {% endif %}
                 </i>
             </a>
         </div>

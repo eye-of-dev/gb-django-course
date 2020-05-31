@@ -279,4 +279,12 @@
         $(this).addClass('active').siblings().removeClass('active');
     });
 
+    $('.ajax').on('click', function(e) {
+        e.preventDefault();
+        let href = $(this).attr('href');
+        $.get(href, {'format' : 'json'}, function(data) {
+             alert(data);
+        }, 'json');
+    });
+
 }(jQuery));

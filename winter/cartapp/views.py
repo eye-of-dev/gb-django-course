@@ -73,7 +73,3 @@ def delete_action(request, pk):
         result = render_to_string('includes/cart_data.html', {'cart': cart})
 
         return JsonResponse({'result': result})
-
-
-def checkout_view(request):
-    pass
