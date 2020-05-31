@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.core.serializers import serialize
 from django.db import transaction
+from django.db.models import F
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
 
@@ -13,6 +13,8 @@ from authapp.models import ShopUser
 from orderapp.models import Orders, OrdersUserInfo, OrdersProducts
 from orderapp.forms import OrdersForm, OrdersProductsForm
 from shop.models import ProductCategories, Products
+
+from adminapp.forms import ProductCategoryEditForm
 
 
 class OrdersListView(ListView):
@@ -140,7 +142,7 @@ class ProductsCategoriesUpdateView(UpdateView):
     model = ProductCategories
     template_name = 'product_categories/update.html'
     success_url = reverse_lazy('admin:product_categories_index')
-    fields = '__all__'
+    form_class = ProductCategoryEditForm
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def dispatch(self, *args, **kwargs):
@@ -150,6 +152,14 @@ class ProductsCategoriesUpdateView(UpdateView):
         context = super(ProductsCategoriesUpdateView, self).get_context_data(**kwargs)
         context['title'] = 'Обновление категории: ' + self.object.title
         return context
+
+    def form_valid(self, form):
+        if 'discount' in form.cleaned_data:
+            discount = form.cleaned_data['discount']
+            if discount:
+                self.object.list_products.update(price=F('price') * (1 - discount / 100))
+
+        return super().form_valid(form)
 
 
 class ProductsCategoriesDeleteView(DeleteView):

@@ -2,6 +2,8 @@
     Models shop app
 """
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 class ProductCategories(models.Model):
@@ -47,3 +49,11 @@ class Products(models.Model):
 
     def __str__(self):
         return self.title
+
+    @receiver(pre_save, sender=ProductCategories)
+    def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+        if instance.pk:
+            if instance.is_active:
+                instance.list_products.update(is_active=True)
+            else:
+                instance.list_products.update(is_active=False)
